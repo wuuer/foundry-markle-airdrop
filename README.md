@@ -1,66 +1,42 @@
-## Foundry
+# Generate account data for building Merkel Tree
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
-
-Foundry consists of:
-
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
+```bash
+forge script script/GenerateInput.s.sol
 ```
 
-### Test
+# Generate Merkel Tree data
 
-```shell
-$ forge test
+```bash
+forge script script/MakeMerkleTree.s.sol
 ```
 
-### Format
+**change the root in helperConfig.s.sol**
 
-```shell
-$ forge fmt
+**change the proofs of user in MerkleAirdropTest.t.sol**
+
+# EIP-191 and EIP-712
+
+https://www.cyfrin.io/blog/understanding-ethereum-signature-standards-eip-191-eip-712
+
+1. EIP-191
+   https://eips.ethereum.org/EIPS/eip-191
+2. EIP-712  
+   https://eips.ethereum.org/EIPS/eip-712
+
+# ECDSA
+
+# Transaction types
+
+    1. 113
+
+# EIP712 MessageHash
+
+```bash
+cast call <contract-address> "getMessageHash(address,uint256)" <account-address> 25000000000000000000 --rpc-url http://localhost:8545
 ```
 
-### Gas Snapshots
+# ECDSA sign
 
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+```bash
+cast wallet sign --no-hash <MessageHash> --private-key <private-key>
 ```
